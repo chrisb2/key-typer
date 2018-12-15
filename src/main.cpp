@@ -1,13 +1,14 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 
-const int BUTTON_PIN = 9;
-const int LED_PIN = 17;
-
-const int DELAY_MS = 10; // time between each character being written
-const int CHARS_PER_LINE = 104;
+// time in milliseconds between each character being written
+const int DELAY_MS = 10;
+const int LINE_LENGTH = 104;
 const char A = 'a';
 const char Z = 'z';
+
+const int BUTTON_PIN = 9;
+const int LED_PIN = 17;
 
 char character = A;
 int ledState = 0;
@@ -22,7 +23,7 @@ void setup() {
 
 void loop() {
     if (digitalRead(BUTTON_PIN) == 0) {
-        if (charCount == CHARS_PER_LINE) {
+        if (charCount == LINE_LENGTH) {
             // Start a new line and start again at letter a
             Keyboard.println();
             character = A;
@@ -32,7 +33,6 @@ void loop() {
             Keyboard.write(character++);
             charCount++;
             if (character > Z) {
-                // Start again at letter a
                 character = A;
             }
         }
