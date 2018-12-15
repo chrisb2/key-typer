@@ -8,16 +8,13 @@ const char A = 'a';
 const char Z = 'z';
 
 const int BUTTON_PIN = 9;
-const int LED_PIN = 17;
 
 char character = A;
-int ledState = 0;
 int charCount = 0;
 
 void setup() {
     pinMode(BUTTON_PIN, INPUT);
     digitalWrite(BUTTON_PIN, HIGH);
-    pinMode(LED_PIN, OUTPUT);
     Keyboard.begin();
 }
 
@@ -38,7 +35,5 @@ void loop() {
         }
 
         delay(DELAY_MS);
-        digitalWrite(LED_PIN, ledState);
-        ledState = !ledState;
     }
 }
