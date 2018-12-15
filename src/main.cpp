@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 
-int buttonPin = 9;
-int ledPin = 17;
+const int BUTTON_PIN = 9;
+const int LED_PIN = 17;
 
 const int CHARS_PER_LINE = 50;
 const int CHAR_DELAY_MS = 50;
@@ -15,15 +15,15 @@ int charCount = 0;
 
 void setup()
 {
-    pinMode(buttonPin, INPUT);
-    digitalWrite(buttonPin, HIGH);
-    pinMode(ledPin, OUTPUT);
+    pinMode(BUTTON_PIN, INPUT);
+    digitalWrite(BUTTON_PIN, HIGH);
+    pinMode(LED_PIN, OUTPUT);
     Keyboard.begin();
 }
 
 void loop()
 {
-    if (digitalRead(buttonPin) == 0) {
+    if (digitalRead(BUTTON_PIN) == 0) {
         if (charCount == CHARS_PER_LINE) {
             // Start a new line and start again at letter a
             Keyboard.println();
@@ -41,7 +41,7 @@ void loop()
         }
 
         delay(CHAR_DELAY_MS);
-        digitalWrite(ledPin, ledState);
+        digitalWrite(LED_PIN, ledState);
         ledState = !ledState;
     }
 }
