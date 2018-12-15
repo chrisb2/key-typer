@@ -3,10 +3,9 @@
 
 // time in milliseconds between each character being written
 const int DELAY_MS = 10;
-const int LINE_LENGTH = 104;
+const int LINE_LENGTH = 26 * 4;
 const char A = 'a';
 const char Z = 'z';
-
 const int BUTTON_PIN = 9;
 
 char character = A;
@@ -19,7 +18,7 @@ void setup() {
 }
 
 void loop() {
-    if (digitalRead(BUTTON_PIN) == 0) {
+    if (digitalRead(BUTTON_PIN) == LOW) {
         if (charCount == LINE_LENGTH) {
             // Start a new line and start again at letter a
             Keyboard.println();
