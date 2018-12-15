@@ -4,8 +4,8 @@
 const int BUTTON_PIN = 9;
 const int LED_PIN = 17;
 
-const int CHARS_PER_LINE = 50;
-const int CHAR_DELAY_MS = 50;
+const int CHARS_PER_LINE = 104;
+const int CHAR_DELAY_MS = 10;
 const int CHAR_A = 97;
 const int CHAR_Z = 122;
 
