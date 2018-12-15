@@ -29,8 +29,7 @@ void loop() {
             charCount = 0;
         } else {
             // Write a single character
-            Keyboard.write(character);
-            character++;
+            Keyboard.write(character++);
             charCount++;
             if (character > Z) {
                 // Start again at letter a
