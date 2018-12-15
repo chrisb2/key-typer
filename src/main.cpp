@@ -9,8 +9,8 @@ const int CHARS_PER_LINE = 104;
 const char A = 'a';
 const char Z = 'z';
 
+char character = A;
 int ledState = 0;
-int character = A;
 int charCount = 0;
 
 void setup() {
