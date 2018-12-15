@@ -4,13 +4,13 @@
 const int BUTTON_PIN = 9;
 const int LED_PIN = 17;
 
-const int CHAR_DELAY_MS = 10;
+const int DELAY_MS = 10; // time between each character being written
 const int CHARS_PER_LINE = 104;
-const int CHAR_A = 97;
-const int CHAR_Z = 122;
+const char A = 'a';
+const char Z = 'z';
 
 int ledState = 0;
-int character = CHAR_A;
+int character = A;
 int charCount = 0;
 
 void setup() {
@@ -25,20 +25,20 @@ void loop() {
         if (charCount == CHARS_PER_LINE) {
             // Start a new line and start again at letter a
             Keyboard.println();
-            character = CHAR_A;
+            character = A;
             charCount = 0;
         } else {
             // Write a single character
             Keyboard.write(character);
             character++;
             charCount++;
-            if (character > CHAR_Z) {
+            if (character > Z) {
                 // Start again at letter a
-                character = CHAR_A;
+                character = A;
             }
         }
 
-        delay(CHAR_DELAY_MS);
+        delay(DELAY_MS);
         digitalWrite(LED_PIN, ledState);
         ledState = !ledState;
     }
