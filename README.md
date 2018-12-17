@@ -5,3 +5,5 @@ Arduino program for rapidly typing characters using a [Pro Micro - 5V/16MHz](htt
 I built this to aid in debuging a textarea in a web page which was intermittently dropping characters in IE11 due a Javascript issue.
 
 Use a button or switch between pin 9 and GND on the Pro Micro to trigger character generation.
+
+![Picture](./docs/promicro-switch.jpg)
