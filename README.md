@@ -6,4 +6,9 @@ I built this to aid in debuging a textarea in a web page which was intermittentl
 
 Use a button or switch between pin 9 and GND on the Pro Micro to trigger character generation.
 
+The two main adjustable constants in the program are:
+
+- DELAY_MS - the delay in milliseconds between each character being sent. Default is 10ms
+- LINE_LENGTH - the number of characters in each line. Default is 104 (a-z four times).
+
 ![Picture](./docs/promicro-switch.jpg)
