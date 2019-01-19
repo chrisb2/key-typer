@@ -5,7 +5,7 @@ I built this to aid in debugging a textarea in a web page which was intermittent
 
 There are three adjustable parameters available via the buttons:
 
-- Lines - the number of lines to text to output (-1, 1, 4). The default is -1 (unlimited).
+- Lines - the number of lines of text to output (-1, 1, 4). The default is -1 (unlimited).
 - Characters - the number of characters in each line. The default is 52 (a-z twice).
 - Rate - the rate of character generation in characters/minute (100, 200, 400, 6000). The default is 200 (average typist).
 
