@@ -13,12 +13,16 @@ const int CHARS_BUTTON_PIN = 7;
 const int RATE_BUTTON_PIN = 8;
 
 const int TFT_CS_PIN = 10;
-const int TFT_DC_PIN = A0; // RS
+const int TFT_DC_PIN = A0; // Labelled RS on TFT
 const int TFT_RST_PIN = 14;
 
-const int LINES_VALUES[3] = {-1, 1, 4};
-const int CHARS_VALUES[4] = {5, 13, 52, 104};
+const int LINES_VALUES[4] = {-1, 1, 2, 4};
+const int CHARS_VALUES[5] = {5, 13, 26, 52, 104};
 const int RATE_VALUES[4] = {100, 200, 400, 6000};
+
+const int LINES_ARRAY_LEN = sizeof(LINES_VALUES) / sizeof(LINES_VALUES[0]);
+const int CHARS_ARRAY_LEN = sizeof(CHARS_VALUES) / sizeof(CHARS_VALUES[0]);
+const int RATE_ARRAY_LEN = sizeof(RATE_VALUES) / sizeof(RATE_VALUES[0]);
 
 const int LABEL_X_OFFSET = 10;
 const int VALUE_X_OFFSET = 95;
@@ -52,15 +56,15 @@ void clearNumber(int number, int x, int y) {
     screen.stroke(ST7735_BLACK);
 }
 
-void updateLinesValue(int number) {
+void setLinesValue(int number) {
     displayNumber(number, VALUE_X_OFFSET, LINES_Y_OFFSET);
 }
 
-void updateCharsValue(int number) {
+void setCharsValue(int number) {
     displayNumber(number, VALUE_X_OFFSET, CHARS_Y_OFFSET);
 }
 
-void updateRateValue(int number) {
+void setRateValue(int number) {
     displayNumber(number, VALUE_X_OFFSET, RATE_Y_OFFSET);
 }
 
@@ -88,10 +92,10 @@ void actionLinesButton() {
     if (linesButton.fell()) {
         clearLinesValue(LINES_VALUES[linesIndex]);
         linesIndex++;
-        if (linesIndex > 2) {
+        if (linesIndex == LINES_ARRAY_LEN) {
             linesIndex = 0;
         }
-        updateLinesValue(LINES_VALUES[linesIndex]);
+        setLinesValue(LINES_VALUES[linesIndex]);
     }
 }
 
@@ -100,10 +104,10 @@ void actionCharsButton() {
     if (charsButton.fell()) {
         clearCharsValue(CHARS_VALUES[charsIndex]);
         charsIndex++;
-        if (charsIndex > 3) {
+        if (charsIndex == CHARS_ARRAY_LEN) {
             charsIndex = 0;
         }
-        updateCharsValue(CHARS_VALUES[charsIndex]);
+        setCharsValue(CHARS_VALUES[charsIndex]);
     }
 }
 
@@ -112,10 +116,10 @@ void actionRateButton() {
     if (rateButton.fell()) {
         clearRateValue(RATE_VALUES[rateIndex]);
         rateIndex++;
-        if (rateIndex > 3) {
+        if (rateIndex == RATE_ARRAY_LEN) {
             rateIndex = 0;
         }
-        updateRateValue(RATE_VALUES[rateIndex]);
+        setRateValue(RATE_VALUES[rateIndex]);
     }
 }
 
@@ -129,9 +133,9 @@ void initializeScreen() {
     screen.text("Chars:", LABEL_X_OFFSET, CHARS_Y_OFFSET);
     screen.text("Rate:", LABEL_X_OFFSET, RATE_Y_OFFSET);
 
-    updateLinesValue(LINES_VALUES[linesIndex]);
-    updateCharsValue(CHARS_VALUES[charsIndex]);
-    updateRateValue(RATE_VALUES[rateIndex]);
+    setLinesValue(LINES_VALUES[linesIndex]);
+    setCharsValue(CHARS_VALUES[charsIndex]);
+    setRateValue(RATE_VALUES[rateIndex]);
 }
 
 void setup() {
