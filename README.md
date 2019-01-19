@@ -1,14 +1,19 @@
 # key-typer
-
 Arduino program for rapidly typing characters using a [Pro Micro - 5V/16MHz](https://www.sparkfun.com/products/12640) as a [USB Human Interface Device](https://en.wikipedia.org/wiki/USB_human_interface_device_class) (HID) keyboard. Based on [Turn your Pro Micro into a USB Keyboard/Mouse](https://www.sparkfun.com/tutorials/337).
 
-I built this to aid in debuging a textarea in a web page which was intermittently dropping characters in IE11 due a Javascript issue.
+I built this to aid in debugging a textarea in a web page which was intermittently dropping characters in IE11 due a Javascript issue.
 
-Use a button or switch between pin 9 and GND on the Pro Micro to trigger character generation.
+There are three adjustable parameters available via the buttons:
 
-The two main adjustable constants in the program are:
+- Lines - the number of lines to text to output (-1, 1, 4). The default is -1 (unlimited).
+- Characters - the number of characters in each line. The default is 52 (a-z twice).
+- Rate - the rate of character generation in characters/minute (100, 200, 400, 6000). The default is 200 (average typist).
 
-- DELAY_MS - the delay in milliseconds between each character being sent. Default is 10ms
-- LINE_LENGTH - the number of characters in each line. Default is 104 (a-z four times).
+Character generation is started and stopped with the toggle switch.
 
-![Picture](./docs/promicro-switch.jpg)
+![Picture](./docs/key-typer.jpg)
+
+This is the schematic for the project. If the schematic appears to be missing details, download it and view it locally,
+or zoom the web page.
+
+![Circuit Schematic](./docs/key-typer-schematic.svg)
