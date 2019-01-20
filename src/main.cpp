@@ -18,7 +18,7 @@ const int TFT_RST_PIN = 14;
 
 const int LINES_VALUES[4] = {-1, 1, 2, 4};
 const int CHARS_VALUES[5] = {5, 13, 26, 52, 104};
-const int RATE_VALUES[4] = {100, 200, 400, 6000};
+const int RATE_VALUES[5] = {100, 200, 400, 1000, 6000};
 
 const int LINES_ARRAY_LEN = sizeof(LINES_VALUES) / sizeof(LINES_VALUES[0]);
 const int CHARS_ARRAY_LEN = sizeof(CHARS_VALUES) / sizeof(CHARS_VALUES[0]);
@@ -87,7 +87,7 @@ void initializeButton(Bounce *button, int pin) {
     button->interval(5);
 }
 
-void actionLinesButton() {
+void handleLinesButton() {
     linesButton.update();
     if (linesButton.fell()) {
         clearLinesValue(LINES_VALUES[linesIndex]);
@@ -99,7 +99,7 @@ void actionLinesButton() {
     }
 }
 
-void actionCharsButton() {
+void handleCharsButton() {
     charsButton.update();
     if (charsButton.fell()) {
         clearCharsValue(CHARS_VALUES[charsIndex]);
@@ -111,7 +111,7 @@ void actionCharsButton() {
     }
 }
 
-void actionRateButton() {
+void handleRateButton() {
     rateButton.update();
     if (rateButton.fell()) {
         clearRateValue(RATE_VALUES[rateIndex]);
@@ -173,7 +173,7 @@ void loop() {
         lineCount = 0;
     }
 
-    actionLinesButton();
-    actionCharsButton();
-    actionRateButton();
+    handleLinesButton();
+    handleCharsButton();
+    handleRateButton();
 }
