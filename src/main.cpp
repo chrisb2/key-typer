@@ -9,7 +9,7 @@ const char Z = 'z';
 
 const int START_BUTTON_PIN = 9;
 const int LINES_BUTTON_PIN = 6;
-const int CHARS_BUTTON_PIN = 7;
+const int LINE_LEN_BUTTON_PIN = 7;
 const int RATE_BUTTON_PIN = 8;
 
 const int TFT_CS_PIN = 10;
@@ -17,17 +17,17 @@ const int TFT_DC_PIN = A0; // Labelled RS on TFT
 const int TFT_RST_PIN = 14;
 
 const int LINES_VALUES[4] = {-1, 1, 2, 4};
-const int CHARS_VALUES[5] = {5, 13, 26, 52, 104};
+const int LINE_LEN_VALUES[5] = {5, 13, 26, 52, 104};
 const int RATE_VALUES[5] = {100, 200, 400, 1000, 6000};
 
 const int LINES_ARRAY_LEN = sizeof(LINES_VALUES) / sizeof(LINES_VALUES[0]);
-const int CHARS_ARRAY_LEN = sizeof(CHARS_VALUES) / sizeof(CHARS_VALUES[0]);
+const int LINE_LEN_ARRAY_LEN = sizeof(LINE_LEN_VALUES) / sizeof(LINE_LEN_VALUES[0]);
 const int RATE_ARRAY_LEN = sizeof(RATE_VALUES) / sizeof(RATE_VALUES[0]);
 
 const int LABEL_X_OFFSET = 10;
 const int VALUE_X_OFFSET = 95;
 const int LINES_Y_OFFSET = 35;
-const int CHARS_Y_OFFSET = 60;
+const int LINE_LEN_Y_OFFSET = 60;
 const int RATE_Y_OFFSET = 85;
 
 char character = A;
@@ -35,14 +35,14 @@ char character = A;
 int charCount = 0;
 int lineCount = 0;
 int linesIndex = 0;
-int charsIndex = 2;
+int lineLenIndex = 2;
 int rateIndex = 1;
 
 TFT screen = TFT(TFT_CS_PIN, TFT_DC_PIN, TFT_RST_PIN);
 
 Bounce startButton = Bounce();
 Bounce linesButton = Bounce();
-Bounce charsButton = Bounce();
+Bounce lineLenButton = Bounce();
 Bounce rateButton = Bounce();
 
 void displayNumber(int number, int x, int y) {
@@ -60,8 +60,8 @@ void setLinesValue(int number) {
     displayNumber(number, VALUE_X_OFFSET, LINES_Y_OFFSET);
 }
 
-void setCharsValue(int number) {
-    displayNumber(number, VALUE_X_OFFSET, CHARS_Y_OFFSET);
+void setLineLenValue(int number) {
+    displayNumber(number, VALUE_X_OFFSET, LINE_LEN_Y_OFFSET);
 }
 
 void setRateValue(int number) {
@@ -72,8 +72,8 @@ void clearLinesValue(int number) {
     clearNumber(number, VALUE_X_OFFSET, LINES_Y_OFFSET);
 }
 
-void clearCharsValue(int number) {
-    clearNumber(number, VALUE_X_OFFSET, CHARS_Y_OFFSET);
+void clearLineLenValue(int number) {
+    clearNumber(number, VALUE_X_OFFSET, LINE_LEN_Y_OFFSET);
 }
 
 void clearRateValue(int number) {
@@ -99,15 +99,15 @@ void handleLinesButton() {
     }
 }
 
-void handleCharsButton() {
-    charsButton.update();
-    if (charsButton.fell()) {
-        clearCharsValue(CHARS_VALUES[charsIndex]);
-        charsIndex++;
-        if (charsIndex == CHARS_ARRAY_LEN) {
-            charsIndex = 0;
+void handleLineLenButton() {
+    lineLenButton.update();
+    if (lineLenButton.fell()) {
+        clearLineLenValue(LINE_LEN_VALUES[lineLenIndex]);
+        lineLenIndex++;
+        if (lineLenIndex == LINE_LEN_ARRAY_LEN) {
+            lineLenIndex = 0;
         }
-        setCharsValue(CHARS_VALUES[charsIndex]);
+        setLineLenValue(LINE_LEN_VALUES[lineLenIndex]);
     }
 }
 
@@ -130,18 +130,18 @@ void initializeScreen() {
     screen.stroke(ST7735_BLACK);
     screen.text("Key Typer", 25, 5);
     screen.text("Lines:", LABEL_X_OFFSET, LINES_Y_OFFSET);
-    screen.text("Chars:", LABEL_X_OFFSET, CHARS_Y_OFFSET);
+    screen.text("Chars:", LABEL_X_OFFSET, LINE_LEN_Y_OFFSET);
     screen.text("Rate:", LABEL_X_OFFSET, RATE_Y_OFFSET);
 
     setLinesValue(LINES_VALUES[linesIndex]);
-    setCharsValue(CHARS_VALUES[charsIndex]);
+    setLineLenValue(LINE_LEN_VALUES[lineLenIndex]);
     setRateValue(RATE_VALUES[rateIndex]);
 }
 
 void setup() {
     initializeButton(&startButton, START_BUTTON_PIN);
     initializeButton(&linesButton, LINES_BUTTON_PIN);
-    initializeButton(&charsButton, CHARS_BUTTON_PIN);
+    initializeButton(&lineLenButton, LINE_LEN_BUTTON_PIN);
     initializeButton(&rateButton, RATE_BUTTON_PIN);
     initializeScreen();
     Keyboard.begin();
@@ -152,7 +152,7 @@ void loop() {
 
     if (startButton.read() == LOW) {
         if (LINES_VALUES[linesIndex] == -1 || lineCount < LINES_VALUES[linesIndex]) {
-            if (charCount == CHARS_VALUES[charsIndex]) {
+            if (charCount == LINE_LEN_VALUES[lineLenIndex]) {
                 // Start a new line and start again at letter a
                 Keyboard.println();
                 character = A;
@@ -174,6 +174,6 @@ void loop() {
     }
 
     handleLinesButton();
-    handleCharsButton();
+    handleLineLenButton();
     handleRateButton();
 }
