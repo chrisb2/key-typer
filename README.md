@@ -9,7 +9,7 @@ There are three adjustable parameters available via the buttons:
 - Characters - the number of characters in each line (5, 13, 26, 52, 104). The default is 26 (a-z).
 - Rate - the rate of character generation in characters/minute (100, 200, 400, 1000, 6000). The default is 200 (average typist). 100 is a slow typist, 400 is a professional typist and anything higher is not humanly possible!
 
-Character generation is started and stopped with the toggle switch.
+These parameters may be adjusted while characters are being generated. Character generation is started and stopped with the toggle switch.
 
 ![Picture](./docs/key-typer.jpg)
 

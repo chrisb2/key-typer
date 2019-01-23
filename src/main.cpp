@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 #include <spi.h>
+#include <Ticker.h>
 #include <TFT.h>
 #include <Bounce2.h>
 
@@ -30,6 +31,8 @@ const int LINES_Y_OFFSET = 35;
 const int LINE_LEN_Y_OFFSET = 60;
 const int RATE_Y_OFFSET = 85;
 
+const long MILLIS_IN_MINUTE = 60000;
+
 char character = A;
 
 int charCount = 0;
@@ -45,9 +48,17 @@ Bounce linesButton = Bounce();
 Bounce lineLenButton = Bounce();
 Bounce rateButton = Bounce();
 
+void generateCharacter();
+int getInterval();
+Ticker characterTimer(generateCharacter, getInterval());
+
 void displayNumber(int number, int x, int y) {
     char cstr[5];
     screen.text(itoa(number, cstr, 10), x, y);
+}
+
+int getInterval() {
+    return MILLIS_IN_MINUTE / RATE_VALUES[rateIndex];
 }
 
 void clearNumber(int number, int x, int y) {
@@ -120,6 +131,40 @@ void handleRateButton() {
             rateIndex = 0;
         }
         setRateValue(RATE_VALUES[rateIndex]);
+        characterTimer.interval(getInterval());
+    }
+}
+
+void handleStartButton() {
+    startButton.update();
+    if (startButton.read() == LOW) {
+        if (characterTimer.state() == STOPPED) {
+            characterTimer.start();
+        }
+    } else {
+        if (characterTimer.state() == RUNNING) {
+            characterTimer.stop();
+            lineCount = 0;
+        }
+    }
+}
+
+void generateCharacter() {
+    if (LINES_VALUES[linesIndex] == -1 || lineCount < LINES_VALUES[linesIndex]) {
+        if (charCount >= LINE_LEN_VALUES[lineLenIndex]) {
+            // Start a new line and start again at letter a
+            Keyboard.println();
+            character = A;
+            charCount = 0;
+            lineCount++;
+        } else {
+            // Write a single character
+            Keyboard.write(character++);
+            charCount++;
+            if (character > Z) {
+                character = A;
+            }
+        }
     }
 }
 
@@ -148,31 +193,8 @@ void setup() {
 }
 
 void loop() {
-    startButton.update();
-
-    if (startButton.read() == LOW) {
-        if (LINES_VALUES[linesIndex] == -1 || lineCount < LINES_VALUES[linesIndex]) {
-            if (charCount == LINE_LEN_VALUES[lineLenIndex]) {
-                // Start a new line and start again at letter a
-                Keyboard.println();
-                character = A;
-                charCount = 0;
-                lineCount++;
-            } else {
-                // Write a single character
-                Keyboard.write(character++);
-                charCount++;
-                if (character > Z) {
-                    character = A;
-                }
-            }
-        }
-
-        delay(60000 / RATE_VALUES[rateIndex]);
-    } else {
-        lineCount = 0;
-    }
-
+    characterTimer.update();
+    handleStartButton();
     handleLinesButton();
     handleLineLenButton();
     handleRateButton();
