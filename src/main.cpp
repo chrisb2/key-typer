@@ -8,7 +8,7 @@
 const char A = 'a';
 const char Z = 'z';
 
-const int START_BUTTON_PIN = 9;
+const int START_SWITCH_PIN = 9;
 const int LINES_BUTTON_PIN = 6;
 const int LINE_LEN_BUTTON_PIN = 7;
 const int RATE_BUTTON_PIN = 8;
@@ -43,7 +43,7 @@ int rateIndex = 1;
 
 TFT screen = TFT(TFT_CS_PIN, TFT_DC_PIN, TFT_RST_PIN);
 
-Bounce startButton = Bounce();
+Bounce startSwitch = Bounce();
 Bounce linesButton = Bounce();
 Bounce lineLenButton = Bounce();
 Bounce rateButton = Bounce();
@@ -91,7 +91,7 @@ void clearRateValue(int number) {
     clearNumber(number, VALUE_X_OFFSET, RATE_Y_OFFSET);
 }
 
-void initializeButton(Bounce *button, int pin) {
+void initializeInput(Bounce *button, int pin) {
     pinMode(pin, INPUT);
     digitalWrite(pin, HIGH);
     button->attach(pin);
@@ -135,17 +135,13 @@ void handleRateButton() {
     }
 }
 
-void handleStartButton() {
-    startButton.update();
-    if (startButton.read() == LOW) {
-        if (characterTimer.state() == STOPPED) {
-            characterTimer.start();
-        }
-    } else {
-        if (characterTimer.state() == RUNNING) {
-            characterTimer.stop();
-            lineCount = 0;
-        }
+void handlestartSwitch() {
+    startSwitch.update();
+    if (startSwitch.read() == LOW && characterTimer.state() == STOPPED) {
+        characterTimer.start();
+    } else if (startSwitch.read() == HIGH && characterTimer.state() == RUNNING) {
+        characterTimer.stop();
+        lineCount = 0;
     }
 }
 
@@ -184,17 +180,17 @@ void initializeScreen() {
 }
 
 void setup() {
-    initializeButton(&startButton, START_BUTTON_PIN);
-    initializeButton(&linesButton, LINES_BUTTON_PIN);
-    initializeButton(&lineLenButton, LINE_LEN_BUTTON_PIN);
-    initializeButton(&rateButton, RATE_BUTTON_PIN);
+    initializeInput(&startSwitch, START_SWITCH_PIN);
+    initializeInput(&linesButton, LINES_BUTTON_PIN);
+    initializeInput(&lineLenButton, LINE_LEN_BUTTON_PIN);
+    initializeInput(&rateButton, RATE_BUTTON_PIN);
     initializeScreen();
     Keyboard.begin();
 }
 
 void loop() {
     characterTimer.update();
-    handleStartButton();
+    handlestartSwitch();
     handleLinesButton();
     handleLineLenButton();
     handleRateButton();
