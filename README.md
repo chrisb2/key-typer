@@ -1,7 +1,9 @@
 # key-typer
-Arduino program for rapidly typing characters using a [Pro Micro - 5V/16MHz](https://www.sparkfun.com/products/12640) as a [USB Human Interface Device](https://en.wikipedia.org/wiki/USB_human_interface_device_class) (HID) keyboard. Based on [Turn your Pro Micro into a USB Keyboard/Mouse](https://www.sparkfun.com/tutorials/337).
+Arduino program and hardware for rapidly typing characters using a [Pro Micro - 5V/16MHz](https://www.sparkfun.com/products/12640) as a [USB Human Interface Device](https://en.wikipedia.org/wiki/USB_human_interface_device_class) (HID) keyboard. Based on [Turn your Pro Micro into a USB Keyboard/Mouse](https://www.sparkfun.com/tutorials/337).
 
 I built this to aid in debugging a textarea in a web page which was intermittently dropping characters in IE11 due to a Javascript issue.
+
+When manually typing at the keyboard, it's hard to tell if intermittent character loss is due to a bug, or because the keys were not pressed properly. In addition manual typing speed is limited, so its not possible to do 'stress' testing. This device solves both these problems by emulating a USB keyboard and generating characters programmatically.
 
 There are three adjustable parameters available via the buttons:
 
@@ -17,3 +19,5 @@ This is the schematic for the project. If the schematic appears to be missing de
 or zoom the web page.
 
 ![Circuit Schematic](./docs/key-typer-schematic.svg)
+
+The code in repository has the configuration files to allow it to be imported into the PlatformIO development environment, alternatively it may be edited in the Arduino IDE.
