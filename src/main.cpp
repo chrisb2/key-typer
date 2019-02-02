@@ -17,13 +17,12 @@ const int TFT_CS_PIN = 10;
 const int TFT_DC_PIN = A0; // Labelled RS on TFT
 const int TFT_RST_PIN = 14;
 
-const int LINES_VALUES[4] = {-1, 1, 2, 4};
-const int LINE_LEN_VALUES[5] = {5, 13, 26, 52, 104};
-const int RATE_VALUES[5] = {100, 200, 400, 1000, 6000};
-
-const int LINES_ARRAY_LEN = sizeof(LINES_VALUES) / sizeof(LINES_VALUES[0]);
-const int LINE_LEN_ARRAY_LEN = sizeof(LINE_LEN_VALUES) / sizeof(LINE_LEN_VALUES[0]);
-const int RATE_ARRAY_LEN = sizeof(RATE_VALUES) / sizeof(RATE_VALUES[0]);
+const int LINES_ARRAY_LEN = 4;
+const int LINES_VALUES[LINES_ARRAY_LEN] = {-1, 1, 2, 4};
+const int LINE_LEN_ARRAY_LEN = 5;
+const int LINE_LEN_VALUES[LINE_LEN_ARRAY_LEN] = {5, 13, 26, 52, 104};
+const int RATE_ARRAY_LEN = 5;
+const int RATE_VALUES[RATE_ARRAY_LEN] = {100, 200, 400, 1000, 6000};
 
 const int LABEL_X_OFFSET = 10;
 const int VALUE_X_OFFSET = 95;
